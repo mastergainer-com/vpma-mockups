@@ -338,34 +338,17 @@
             color: var(--dunkelgrau);
         }
         
-        /* Scroll Hint */
-        .scroll-hint {
-            background: var(--gelb);
-            color: var(--schwarz);
+        /* Mockup Scroll Hint */
+        .mockup-scroll-hint {
             text-align: center;
-            padding: 15px 20px;
-            font-weight: 600;
-            font-size: 16px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 8px;
+            background: var(--hellgrau);
+            border-bottom: 1px solid var(--mittelgrau);
         }
         
-        .scroll-hint p {
-            margin-bottom: 5px;
-        }
-        
-        .scroll-arrow {
-            font-size: 24px;
-            animation: bounce 2s infinite;
-            display: inline-block;
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
+        .mockup-scroll-hint small {
+            color: var(--dunkelgrau);
+            font-size: 13px;
         }
     </style>
 </head>
@@ -374,12 +357,6 @@
         <h1>🗳️ VP Maria Anzbach - Mockup Abstimmung</h1>
         <p>Bewerten Sie die 6 Website-Designs. Ihre Meinung hilft uns, die beste Entscheidung zu treffen!</p>
     </header>
-    
-    <!-- Scroll Hint -->
-    <div class="scroll-hint">
-        <p>👇 Nach unten scrollen, um alle 6 Mockups zu bewerten</p>
-        <div class="scroll-arrow">⬇️</div>
-    </div>
     
     <div class="container">
         <!-- Name Input -->
@@ -394,6 +371,9 @@
                 <div class="mockup-header">
                     <h2>Mockup 1: Klassisch NÖ</h2>
                     <span class="mockup-number">1</span>
+                </div>
+                <div class="mockup-scroll-hint">
+                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
                 </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup1_Klassisch.html" loading="lazy" sandbox="allow-same-origin"></iframe>
@@ -422,6 +402,9 @@
                     <h2>Mockup 2: Modern Lokal</h2>
                     <span class="mockup-number">2</span>
                 </div>
+                <div class="mockup-scroll-hint">
+                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
+                </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup2_Modern.html" loading="lazy" sandbox="allow-same-origin"></iframe>
                     <a href="VP_MA_Mockup2_Modern.html" target="_blank" class="preview-overlay">↗ Vollbild</a>
@@ -448,6 +431,9 @@
                 <div class="mockup-header">
                     <h2>Mockup 3: Premium Gemeinde</h2>
                     <span class="mockup-number">3</span>
+                </div>
+                <div class="mockup-scroll-hint">
+                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
                 </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup3_Premium.html" loading="lazy" sandbox="allow-same-origin"></iframe>
@@ -476,6 +462,9 @@
                     <h2>Mockup 4: Magazin-Style</h2>
                     <span class="mockup-number">4</span>
                 </div>
+                <div class="mockup-scroll-hint">
+                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
+                </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup4_Magazin.html" loading="lazy" sandbox="allow-same-origin"></iframe>
                     <a href="VP_MA_Mockup4_Magazin.html" target="_blank" class="preview-overlay">↗ Vollbild</a>
@@ -503,6 +492,9 @@
                     <h2>Mockup 5: Split-Screen</h2>
                     <span class="mockup-number">5</span>
                 </div>
+                <div class="mockup-scroll-hint">
+                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
+                </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup5_SplitScreen.html" loading="lazy" sandbox="allow-same-origin"></iframe>
                     <a href="VP_MA_Mockup5_SplitScreen.html" target="_blank" class="preview-overlay">↗ Vollbild</a>
@@ -529,6 +521,9 @@
                 <div class="mockup-header">
                     <h2>Mockup 6: Kachel-Grid</h2>
                     <span class="mockup-number">6</span>
+                </div>
+                <div class="mockup-scroll-hint">
+                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
                 </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup6_Kachel.html" loading="lazy" sandbox="allow-same-origin"></iframe>
