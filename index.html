@@ -865,8 +865,8 @@
             }
             
             try {
-                // Verwende onerror@vp-mariaanzbach.at als Fallback (diese Domain ist verifiziert)
-                const fromEmail = 'onerror@vp-mariaanzbach.at';
+                // Verwede noreply@vp-mariaanzbach.at (diese Domain sollte in Resend verifiziert sein)
+                const fromEmail = 'noreply@vp-mariaanzbach.at';
                 
                 const response = await fetchWithTimeout('https://api.resend.com/emails', {
                     method: 'POST',
