@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VP Maria Anzbach - Mockup 6: Kachel-Grid</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f0f0; }
+        
+        :root {
+            --blau: #005A9A;
+            --gelb: #FFD500;
+            --schwarz: #1A1A1A;
+            --weiss: #FFFFFF;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--weiss);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--blau);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--weiss);
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .logo-text { font-size: 20px; font-weight: 600; }
+        .nav { display: flex; gap: 30px; }
+        .nav a {
+            color: var(--schwarz);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .nav a:hover { background: #f0f0f0; }
+        .nav a.cta {
+            background: var(--gelb);
+            color: var(--schwarz);
+            font-weight: 600;
+        }
+        
+        /* Kachel Grid */
+        .grid-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 250px);
+            gap: 20px;
+        }
+        
+        /* Kachel Typen */
+        .tile {
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        .tile:hover { transform: translateY(-5px); }
+        
+        /* Hero Tile (groß) */
+        .tile-hero {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: linear-gradient(135deg, var(--blau) 0%, #003d66 100%);
+            color: var(--weiss);
+        }
+        .tile-hero h1 {
+            font-size: 42px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .tile-hero p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 400px;
+        }
+        .tile-hero .cta {
+            background: var(--gelb);
+            color: var(--schwarz);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            width: fit-content;
+        }
+        
+        /* Bild Tile */
+        .tile-image {
+            background: linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%);
+            position: relative;
+        }
+        .tile-image::after {
+            content: '📸';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            opacity: 0.5;
+        }
+        
+        /* Themen Tiles */
+        .tile-thema {
+            background: var(--weiss);
+        }
+        .tile-thema .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .tile-thema h3 { font-size: 20px; margin-bottom: 10px; }
+        .tile-thema p { font-size: 14px; color: #666; }
+        
+        /* Farbige Themen */
+        .tile-thema.blau .icon { background: var(--blau); }
+        .tile-thema.blau h3 { color: var(--blau); }
+        .tile-thema.gelb { background: var(--gelb); }
+        .tile-thema.gelb .icon { background: var(--schwarz); }
+        .tile-thema.gelb h3 { color: var(--schwarz); }
+        
+        /* Termin Tile */
+        .tile-termin {
+            background: var(--schwarz);
+            color: var(--weiss);
+        }
+        .tile-termin .datum {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--gelb);
+            line-height: 1;
+        }
+        .tile-termin .monat {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        .tile-termin h4 { font-size: 18px; margin-bottom: 10px; }
+        .tile-termin p { font-size: 14px; opacity: 0.7; }
+        
+        /* Quote Tile */
+        .tile-quote {
+            background: #f8f8f8;
+            grid-column: span 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+        }
+        .tile-quote blockquote {
+            font-size: 24px;
+            font-style: italic;
+            color: #333;
+            line-height: 1.5;
+        }
+        .tile-quote cite {
+            display: block;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+            font-style: normal;
+        }
+        
+        /* Newsletter Tile */
+        .tile-newsletter {
+            background: linear-gradient(135deg, var(--blau) 0%, #004070 100%);
+            color: var(--weiss);
+            grid-column: span 2;
+        }
+        .tile-newsletter h3 { font-size: 24px; margin-bottom: 10px; }
+        .tile-newsletter p { margin-bottom: 20px; opacity: 0.9; }
+        .tile-newsletter input {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            margin-right: 10px;
+            width: 250px;
+        }
+        .tile-newsletter button {
+            padding: 12px 24px;
+            background: var(--gelb);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* Stat Tile */
+        .tile-stat {
+            background: var(--weiss);
+            text-align: center;
+            justify-content: center;
+        }
+        .tile-stat .zahl {
+            font-size: 56px;
+            font-weight: bold;
+            color: var(--gelb);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .tile-stat .label {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">VP</div>
+            <div class="logo-text">Maria Anzbach</div>
+        </div>
+        <nav class="nav">
+            <a href="#">Start</a>
+            <a href="#">Themen</a>
+            <a href="#">Team</a>
+            <a href="#">Termine</a>
+            <a href="#" class="cta">Mitmachen</a>
+        </nav>
+    </header>
+    
+    <div class="grid-container">
+        <!-- Hero Tile -->
+        <div class="tile tile-hero">
+            <div>
+                <h1>Gemeinsam für Maria Anzbach</h1>
+                <p>Engagierte Politik für unsere Gemeinde – mit konkreten Projekten und klaren Zielen.</p>
+            </div>
+            <a href="#" class="cta">Mehr erfahren</a>
+        </div>
+        
+        <!-- Bild Tile -->
+        <div class="tile tile-image"></div>
+        
+        <!-- Thema 1 -->
+        <div class="tile tile-thema blau">
+            <div class="icon"></div>
+            <div>
+                <h3>Infrastruktur</h3>
+                <p>Moderne Wege für alle</p>
+            </div>
+        </div>
+        
+        <!-- Termin -->
+        <div class="tile tile-termin">
+            <div>
+                <div class="datum">24</div>
+                <div class="monat">April</div>
+            </div>
+            <div>
+                <h4>Gemeinderatssitzung</h4>
+                <p>Gemeindeamt, 19:00 Uhr</p>
+            </div>
+        </div>
+        
+        <!-- Thema 2 -->
+        <div class="tile tile-thema gelb">
+            <div class="icon"></div>
+            <div>
+                <h3>Bildung</h3>
+                <p>Zukunftschancen für Kinder</p>
+            </div>
+        </div>
+        
+        <!-- Bild Tile -->
+        <div class="tile tile-image"></div>
+        
+        <!-- Stat -->
+        <div class="tile tile-stat">
+            <div class="zahl">12</div>
+            <div class="label">Jahre Erfahrung</div>
+        </div>
+        
+        <!-- Quote -->
+        <div class="tile tile-quote">
+            <blockquote>
+                "Politik ist nicht nur Reden – Politik ist Handeln für die Menschen vor Ort."
+                <cite>— Unser Leitmotiv</cite>
+            </blockquote>
+        </div>
+        
+        <!-- Newsletter -->
+        <div class="tile tile-newsletter">
+            <div>
+                <h3>Bleiben Sie informiert</h3>
+                <p>Newsletter mit aktuellen Projekten und Terminen.</p>
+                <input type="email" placeholder="Ihre E-Mail-Adresse">
+                <button>Anmelden</button>
+            </div>
+        </div>
+        
+        <!-- Stat -->
+        <div class="tile tile-stat">
+            <div class="zahl">50+</div>
+            <div class="label">Projekte umgesetzt</div>
+        </div>
+    </div>
+</body>
+</html>

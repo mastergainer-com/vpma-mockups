@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VP Maria Anzbach - Mockup 4: Magazin-Style</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #FAFAFA; }
+        
+        :root {
+            --blau: #005A9A;
+            --gelb: #FFD500;
+            --schwarz: #1A1A1A;
+            --weiss: #FFFFFF;
+            --creme: #F9F7F2;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            background: var(--blau);
+            color: var(--weiss);
+            text-align: center;
+            padding: 8px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--weiss);
+            padding: 30px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        .logo { font-size: 28px; font-weight: 300; letter-spacing: -1px; }
+        .logo span { font-weight: 700; color: var(--blau); }
+        .nav { display: flex; gap: 40px; }
+        .nav a { color: var(--schwarz); text-decoration: none; font-size: 14px; }
+        .nav a:hover { color: var(--blau); }
+        
+        /* Hauptlayout: Sidebar + Content */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: var(--creme);
+            padding: 40px 30px;
+            min-height: 100vh;
+        }
+        .sidebar-section { margin-bottom: 40px; }
+        .sidebar-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+        .sidebar-link {
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0ddd5;
+            color: var(--schwarz);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .sidebar-link:hover { color: var(--blau); }
+        .event-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #e0ddd5;
+        }
+        .event-date {
+            display: inline-block;
+            background: var(--gelb);
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .event-title { font-size: 14px; color: var(--schwarz); }
+        
+        /* Content */
+        .content { padding: 40px; }
+        
+        /* Featured Article */
+        .featured {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+            background: var(--weiss);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .featured-image {
+            background: linear-gradient(135deg, var(--blau) 0%, #003d66 100%);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--weiss);
+            font-size: 18px;
+        }
+        .featured-content { padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+        .featured-tag {
+            display: inline-block;
+            background: var(--gelb);
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+        .featured h2 {
+            font-size: 36px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .featured p { color: #666; line-height: 1.7; margin-bottom: 30px; }
+        .read-more { color: var(--blau); text-decoration: none; font-weight: 600; }
+        
+        /* Article Grid */
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .article-card {
+            background: var(--weiss);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .article-image {
+            height: 200px;
+            background: var(--hellgrau);
+        }
+        .article-content { padding: 25px; }
+        .article-meta {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .article-title { font-size: 20px; margin-bottom: 10px; }
+        .article-excerpt { color: #666; font-size: 14px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">Gemeinsam für Maria Anzbach seit 2012</div>
+    
+    <header class="header">
+        <div class="logo">VP <span>Maria Anzbach</span></div>
+        <nav class="nav">
+            <a href="#">Start</a>
+            <a href="#">Themen</a>
+            <a href="#">Team</a>
+            <a href="#">Kontakt</a>
+        </nav>
+    </header>
+    
+    <div class="main-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Themen</div>
+                <a href="#" class="sidebar-link">Infrastruktur & Verkehr</a>
+                <a href="#" class="sidebar-link">Bildung & Familie</a>
+                <a href="#" class="sidebar-link">Umwelt & Klima</a>
+                <a href="#" class="sidebar-link">Wirtschaft & Arbeit</a>
+                <a href="#" class="sidebar-link">Kultur & Sport</a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Nächste Termine</div>
+                <div class="event-item">
+                    <div class="event-date">24. APR</div>
+                    <div class="event-title">Gemeinderatssitzung</div>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">02. MAI</div>
+                    <div class="event-title">Bürgergespräch</div>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">15. MAI</div>
+                    <div class="event-title">Frühlingsfest</div>
+                </div>
+            </div>
+        </aside>
+        
+        <main class="content">
+            <article class="featured">
+                <div class="featured-image">[Foto: Gemeindezentrum]</div>
+                <div class="featured-content">
+                    <span class="featured-tag">Aktuell</span>
+                    <h2>Neues Gemeindezentrum: Ein Ort für alle</h2>
+                    <p>Nach drei Jahren Planung starten wir mit dem Bau des neuen Gemeindezentrums. Ein moderner Treffpunkt für Vereine, Bürger und Kultur.</p>
+                    <a href="#" class="read-more">Weiterlesen →</a>
+                </div>
+            </article>
+            
+            <div class="article-grid">
+                <article class="article-card">
+                    <div class="article-image" style="background: linear-gradient(135deg, #e8f4f8 0%, #d0e8f0 100%);"></div>
+                    <div class="article-content">
+                        <div class="article-meta">Infrastruktur</div>
+                        <h3 class="article-title">Glasfaser für alle Haushalte</h3>
+                        <p class="article-excerpt">Der flächendeckende Ausbau beginnt im Sommer. Was das für Anschlüsse bedeutet.</p>
+                    </div>
+                </article>
+                
+                <article class="article-card">
+                    <div class="article-image" style="background: linear-gradient(135deg, #f8f4e8 0%, #f0e8d0 100%);"></div>
+                    <div class="article-content">
+                        <div class="article-meta">Bildung</div>
+                        <h3 class="article-title">Neuer Kindergarten geplant</h3>
+                        <p class="article-excerpt">Mehr Plätze für die Kleinsten. Die Planungen für den Anbau laufen.</p>
+                    </div>
+                </article>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

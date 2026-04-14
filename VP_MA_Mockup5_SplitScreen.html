@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VP Maria Anzbach - Mockup 5: Split-Screen</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        :root {
+            --blau: #005A9A;
+            --gelb: #FFD500;
+            --schwarz: #1A1A1A;
+            --weiss: #FFFFFF;
+        }
+        
+        /* Split Screen Hero */
+        .hero-split {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            min-height: 100vh;
+        }
+        
+        /* Linke Seite - Bild */
+        .hero-left {
+            background: linear-gradient(135deg, #1a4a6e 0%, var(--blau) 50%, #003d66 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+        }
+        .hero-left::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 800"><rect fill="%23005A9A" width="400" height="800" opacity="0.3"/><circle cx="100" cy="200" r="150" fill="%23FFD500" opacity="0.1"/><circle cx="300" cy="600" r="200" fill="%23ffffff" opacity="0.05"/></svg>');
+        }
+        .logo-left {
+            position: relative;
+            z-index: 1;
+            color: var(--weiss);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .hero-image-text {
+            position: relative;
+            z-index: 1;
+            color: var(--weiss);
+        }
+        .hero-image-text h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .hero-image-text p {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+        
+        /* Rechte Seite - Content */
+        .hero-right {
+            background: var(--weiss);
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .nav-right {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+        }
+        .nav-right a {
+            color: var(--schwarz);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+        }
+        .nav-right a:hover { color: var(--blau); }
+        
+        .hero-content-right { max-width: 500px; }
+        .hero-content-right h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            color: var(--schwarz);
+        }
+        .hero-content-right h1 span {
+            color: var(--blau);
+        }
+        .hero-content-right > p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+        
+        /* CTA Box */
+        .cta-box {
+            background: var(--gelb);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        .cta-box h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .cta-box p {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .cta-button {
+            background: var(--schwarz);
+            color: var(--weiss);
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        /* Quick Links */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .quick-link {
+            padding: 20px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--schwarz);
+            transition: all 0.3s;
+        }
+        .quick-link:hover {
+            border-color: var(--blau);
+            background: #f8fbfd;
+        }
+        .quick-link-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--blau);
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .quick-link h4 { font-size: 16px; margin-bottom: 5px; }
+        .quick-link p { font-size: 13px; color: #666; }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-split">
+        <div class="hero-left">
+            <div class="logo-left">VP Maria Anzbach</div>
+            <div class="hero-image-text">
+                <h2>Gemeinsam<br>stark</h2>
+                <p>Für unsere Heimat.<br>Für unsere Zukunft.</p>
+            </div>
+        </div>
+        
+        <div class="hero-right">
+            <nav class="nav-right">
+                <a href="#">Über uns</a>
+                <a href="#">Themen</a>
+                <a href="#">Termine</a>
+                <a href="#">Kontakt</a>
+            </nav>
+            
+            <div class="hero-content-right">
+                <h1>Politik mit <span>Herz</span> und <span>Verstand</span></h1>
+                <p>Wir setzen uns für eine lebenswerte Gemeinde ein – mit konkreten Projekten, offenen Ohren und klaren Zielen.</p>
+                
+                <div class="cta-box">
+                    <h3>Werden Sie Mitglied</h3>
+                    <p>Gestalten Sie die Zukunft von Maria Anzbach mit. Jede Stimme zählt.</p>
+                    <a href="#" class="cta-button">Jetzt beitreten</a>
+                </div>
+                
+                <div class="quick-links">
+                    <a href="#" class="quick-link">
+                        <div class="quick-link-icon"></div>
+                        <h4>Unsere Themen</h4>
+                        <p>Was uns wichtig ist</p>
+                    </a>
+                    <a href="#" class="quick-link">
+                        <div class="quick-link-icon"></div>
+                        <h4>Das Team</h4>
+                        <p>Wer wir sind</p>
+                    </a>
+                    <a href="#" class="quick-link">
+                        <div class="quick-link-icon"></div>
+                        <h4>Termine</h4>
+                        <p>Wir treffen uns</p>
+                    </a>
+                    <a href="#" class="quick-link">
+                        <div class="quick-link-icon"></div>
+                        <h4>Kontakt</h4>
+                        <p>Schreiben Sie uns</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

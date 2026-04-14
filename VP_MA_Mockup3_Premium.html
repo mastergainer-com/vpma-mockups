@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VP Maria Anzbach - Mockup 3: Premium Gemeinde</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', serif; }
+        
+        :root {
+            --blau: #005A9A;
+            --gelb: #FFD500;
+            --schwarz: #1A1A1A;
+            --weiss: #FFFFFF;
+            --dunkelgrau: #2A2A2A;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%),
+                        linear-gradient(135deg, #1a3a52 0%, #0d1f2d 100%);
+            min-height: 700px;
+            position: relative;
+            padding: 40px 80px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Navigation */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: auto;
+        }
+        .nav-logo { color: var(--weiss); font-size: 22px; font-weight: normal; letter-spacing: 1px; }
+        .nav-links { color: var(--weiss); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links span { margin-left: 40px; }
+        
+        /* Hero Content */
+        .hero-content {
+            max-width: 700px;
+            margin-bottom: auto;
+            margin-top: auto;
+        }
+        .hero-content h1 {
+            font-size: 64px;
+            color: var(--weiss);
+            font-weight: normal;
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+        .hero-content p {
+            font-size: 22px;
+            color: rgba(255,255,255,0.7);
+            font-family: sans-serif;
+            margin-bottom: 50px;
+        }
+        .cta-button {
+            border: 2px solid var(--weiss);
+            color: var(--weiss);
+            padding: 16px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-family: sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .cta-button:hover {
+            background: var(--gelb);
+            border-color: var(--gelb);
+            color: var(--schwarz);
+        }
+        
+        /* Stats Section */
+        .stats {
+            background: var(--weiss);
+            padding: 120px 80px;
+        }
+        .stats-grid {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-size: 72px;
+            color: var(--gelb);
+            font-weight: bold;
+            line-height: 1;
+            margin-bottom: 15px;
+        }
+        .stat-label {
+            font-size: 16px;
+            color: var(--schwarz);
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <nav class="nav">
+            <div class="nav-logo">VP Maria Anzbach</div>
+            <div class="nav-links">
+                <span>Über uns</span>
+                <span>Themen</span>
+                <span>Veranstaltungen</span>
+                <span>Kontakt</span>
+            </div>
+        </nav>
+        <div class="hero-content">
+            <h1>Für Maria Anzbach.<br>Mit Engagement.<br>Mit Vision.</h1>
+            <p>Zwölf Jahre Erfahrung im Gemeinderat. Für eine lebenswerte Zukunft.</p>
+            <a href="#" class="cta-button">Mehr erfahren</a>
+        </div>
+    </section>
+    
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Jahre Erfahrung</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Umgesetzte Projekte</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Engagement</div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
