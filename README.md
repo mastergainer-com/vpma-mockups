@@ -1,51 +1,121 @@
 # VP Maria Anzbach - Mockup Abstimmung
 
-🗳️ Interaktive Abstimmungsseite für 6 Website-Designs
+Interaktive Abstimmung für 6 Website-Designs mit automatischer Speicherung in Supabase.
 
-## 🌐 Live URL
+## 🚀 Features
 
-**https://mastergainer-com.github.io/vpma-mockups/**
+- ⭐ Sterne-Bewertung für 6 Mockups
+- 💾 Automatische Speicherung in Supabase
+- 📧 Email-Benachrichtigung via Resend API
+- 🏆 Live Top 3 Anzeige
+- 📊 Admin-Bereich mit Statistiken
+- 📥 CSV Export
 
-## 📋 Funktionen
+## 📁 Dateien
 
-- **6 Mockups** mit Live-Vorschau in iframes
-- **Bewertungssystem**: Skala 1-5 Sterne pro Mockup
-- **Kommentarfelder**: Optionale Anmerkungen zu jedem Design
-- **Namenspflicht**: Jede Abstimmung erfordert einen Namen
-- **Email-Integration**: Bewertungen werden per Email an jochen@jasch.cc gesendet
+| Datei | Beschreibung |
+|-------|--------------|
+| `index.html` | Hauptseite mit Abstimmung |
+| `admin.html` | Admin-Bereich mit Statistiken |
+| `supabase-schema.sql` | SQL-Schema für die Datenbank |
+| `DATABASE_SETUP.md` | Detaillierte Setup-Anleitung |
 
-## 🎨 Mockups
+## 🗄️ Datenbank-Setup
 
-1. **Klassisch NÖ** - Traditionelles Design mit VP-Farben
-2. **Modern Lokal** - Zeitgemäßes Layout mit Team-Sektion
-3. **Premium Gemeinde** - Elegant mit Serif-Schrift
-4. **Magazin-Style** - Editorial-Layout mit Sidebar
-5. **Split-Screen** - Zwei-Spalten Hero-Design
-6. **Kachel-Grid** - Modernes Kachel-Layout
+### 1. Supabase Tabelle erstellen
 
-## 🚀 Deployment
+Gehe zu: https://supabase.com/dashboard/project/mctbuvwcupeovtdqeoru/sql/new
 
-- **Host**: GitHub Pages
-- **Repo**: https://github.com/mastergainer-com/vpma-mockups
-- **Statisch**: Kein Backend erforderlich
+Führe folgendes SQL aus:
 
-## 📝 Anleitung
+```sql
+-- Tabelle für Abstimmungen
+CREATE TABLE IF NOT EXISTS mockup_votes (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    voter_name TEXT NOT NULL,
+    mockup_1_rating INTEGER,
+    mockup_2_rating INTEGER,
+    mockup_3_rating INTEGER,
+    mockup_4_rating INTEGER,
+    mockup_5_rating INTEGER,
+    mockup_6_rating INTEGER,
+    comments TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 
-1. Öffne die URL
-2. Gib deinen Namen ein
-3. Bewerte die Mockups (1-5 Sterne)
-4. Optionale Kommentare hinzufügen
-5. Auf "Abstimmung absenden" klicken
-6. Email-Client öffnet sich automatisch
-7. Email absenden
+-- Index für schnellere Abfragen
+CREATE INDEX IF NOT EXISTS idx_mockup_votes_created_at ON mockup_votes(created_at DESC);
 
-## 📧 Email-Versand
+-- Row Level Security (RLS) Policies
+ALTER TABLE mockup_votes ENABLE ROW LEVEL SECURITY;
 
-Die Abstimmung nutzt das `mailto:`-Protokoll:
-- Öffnet den Standard-Email-Client
-- Füllt Empfänger (jochen@jasch.cc), Betreff und Inhalt automatisch aus
-- Nutzer muss nur noch auf "Senden" klicken
+-- Jeder darf lesen (für Top 3 Anzeige)
+CREATE POLICY "Allow public read" ON mockup_votes
+    FOR SELECT USING (true);
+
+-- Jeder darf einfügen (für Abstimmungen)
+CREATE POLICY "Allow public insert" ON mockup_votes
+    FOR INSERT WITH CHECK (true);
+```
+
+### 2. RLS aktivieren
+
+Im Supabase Dashboard:
+1. Gehe zu "Database" → "Tables"
+2. Wähle "mockup_votes"
+3. Klicke auf "Enable RLS"
+
+## 📧 Email-Konfiguration
+
+- **API:** Resend
+- **API Key:** `re_j9G4zb3j_7gdY9FEchoYHGsMi8Ex1NHwB`
+- **Absender:** `noreply@zeitsparen.at`
+- **Empfänger:** `jochen@jasch.cc`
+
+⚠️ **Wichtig:** Domain `zeitsparen.at` muss in Resend verifiziert sein!
+
+## 🧪 Testen
+
+1. Öffne `index.html` im Browser
+2. Gib einen Namen ein
+3. Bewerte mindestens ein Mockup (1-5 Sterne)
+4. Optional: Kommentare hinzufügen
+5. Klicke "🗳️ Abstimmung absenden"
+6. Nach erfolgreicher Speicherung: Top 3 wird angezeigt
+
+## 📊 Admin-Bereich
+
+Zugriff über: `admin.html`
+
+- Gesamtstatistiken
+- Live Top 3
+- Tabelle aller Abstimmungen
+- CSV Export
+
+## 💾 Lokale Backup-Datei
+
+CSV-Export wird gespeichert in:
+```
+/Users/gibor/Library/Mobile Documents/com~apple~CloudDocs/Gibor/Mark/vpma-abstimmungen.csv
+```
+
+## 🔧 Technische Details
+
+- **Supabase Projekt:** `mctbuvwcupeovtdqeoru`
+- **Frontend:** Vanilla HTML/CSS/JS
+- **Database:** PostgreSQL (Supabase)
+- **Email:** Resend API
+- **Auth:** Keine (öffentliche Lesen/Schreiben via RLS)
+
+## 📝 Mockup-Namen
+
+1. **Klassisch NÖ** - Traditionelles Design
+2. **Modern Lokal** - Zeitgemäß mit lokalem Bezug
+3. **Premium Gemeinde** - Hochwertiges Erscheinungsbild
+4. **Magazin-Style** - Editorial/News-Layout
+5. **Split-Screen** - Geteilte Ansicht
+6. **Kachel-Grid** - Kachel-basiertes Layout
 
 ---
 
-Erstellt am: 14.04.2026
+Erstellt: 2026-04-14

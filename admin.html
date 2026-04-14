@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VP MA Mockup - Admin Bereich</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --blau: #005A9A;
+            --gelb: #FFD500;
+            --schwarz: #1A1A1A;
+            --weiss: #FFFFFF;
+            --hellgrau: #F5F5F5;
+            --mittelgrau: #E0E0E0;
+            --dunkelgrau: #666;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--hellgrau);
+            color: var(--schwarz);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: var(--blau);
+            color: var(--weiss);
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--blau);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: var(--weiss);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 14px;
+            color: var(--dunkelgrau);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .stat-card .value {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--blau);
+        }
+        
+        /* Top 3 */
+        .top3-card {
+            background: var(--weiss);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .top3-card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--blau);
+        }
+        
+        .top3-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .top3-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: var(--hellgrau);
+        }
+        
+        .top3-item.rank-1 { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); }
+        .top3-item.rank-2 { background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%); }
+        .top3-item.rank-3 { background: linear-gradient(135deg, #CD7F32 0%, #B87333 100%); color: var(--weiss); }
+        
+        .top3-rank {
+            font-size: 24px;
+            font-weight: bold;
+            width: 40px;
+        }
+        
+        .top3-name { flex: 1; font-weight: 600; }
+        .top3-score { font-size: 20px; font-weight: bold; }
+        .top3-votes { font-size: 13px; opacity: 0.8; margin-left: 10px; }
+        
+        /* Table */
+        .table-card {
+            background: var(--weiss);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+        
+        .table-card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--blau);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--mittelgrau);
+        }
+        
+        th {
+            background: var(--hellgrau);
+            font-weight: 600;
+            color: var(--schwarz);
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:hover {
+            background: var(--hellgrau);
+        }
+        
+        .rating-cell {
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .rating-cell.empty {
+            color: var(--mittelgrau);
+        }
+        
+        .comments-cell {
+            max-width: 300px;
+            white-space: pre-wrap;
+            font-size: 13px;
+            color: var(--dunkelgrau);
+        }
+        
+        .date-cell {
+            white-space: nowrap;
+            font-size: 13px;
+            color: var(--dunkelgrau);
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px;
+        }
+        
+        .spinner {
+            border: 4px solid var(--mittelgrau);
+            border-top: 4px solid var(--blau);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Export Button */
+        .export-btn {
+            background: var(--blau);
+            color: var(--weiss);
+            border: none;
+            padding: 12px 25px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .export-btn:hover {
+            background: #004a7d;
+        }
+        
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>📊 VP MA Mockup - Admin Bereich</h1>
+        <p>Alle Abstimmungen und Statistiken</p>
+    </header>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Zurück zur Abstimmung</a>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Daten werden geladen...</p>
+        </div>
+        
+        <div id="content" style="display: none;">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Gesamtstimmen</h3>
+                    <div class="value" id="total-votes">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Durchschnitt</h3>
+                    <div class="value" id="avg-rating">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Letzte Abstimmung</h3>
+                    <div class="value" id="last-vote" style="font-size: 16px; margin-top: 10px;">-</div>
+                </div>
+            </div>
+            
+            <!-- Top 3 -->
+            <div class="top3-card">
+                <h2>🏆 Top 3 Mockups</h2>
+                <div class="top3-list" id="top3-list">
+                    <!-- Dynamisch -->
+                </div>
+            </div>
+            
+            <!-- Table -->
+            <div class="table-card">
+                <h2>📋 Alle Abstimmungen</h2>
+                <button class="export-btn" onclick="exportCSV()">📥 CSV Export</button>
+                <table id="votes-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>M1</th>
+                            <th>M2</th>
+                            <th>M3</th>
+                            <th>M4</th>
+                            <th>M5</th>
+                            <th>M6</th>
+                            <th>Kommentare</th>
+                            <th>Datum</th>
+                        </tr>
+                    </thead>
+                    <tbody id="votes-tbody">
+                        <!-- Dynamisch -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div id="error" class="error" style="display: none;"></div>
+    </div>
+    
+    <script>
+        // Supabase Config
+        const SUPABASE_URL = 'https://mctbuvwcupeovtdqeoru.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jdGJ1dndjdXBlb3Z0ZHFlb3J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMzE4OTQsImV4cCI6MjA4OTYwNzg5NH0.zYrdRTwjXpZnjKsXR5JMLz_s8v8x7MTvSs7jqZRnKFw';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        const mockupNames = {
+            1: 'Klassisch NÖ',
+            2: 'Modern Lokal',
+            3: 'Premium Gemeinde',
+            4: 'Magazin-Style',
+            5: 'Split-Screen',
+            6: 'Kachel-Grid'
+        };
+        
+        let allVotes = [];
+        
+        async function loadData() {
+            try {
+                const { data, error } = await supabase
+                    .from('mockup_votes')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                allVotes = data || [];
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                
+                if (allVotes.length > 0) {
+                    displayStats(allVotes);
+                    displayTop3(allVotes);
+                    displayTable(allVotes);
+                } else {
+                    document.getElementById('votes-tbody').innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 40px;">Noch keine Abstimmungen vorhanden.</td></tr>';
+                }
+                
+            } catch (err) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').textContent = 'Fehler beim Laden: ' + err.message;
+            }
+        }
+        
+        function displayStats(votes) {
+            document.getElementById('total-votes').textContent = votes.length;
+            
+            // Calculate overall average
+            let totalRatings = 0;
+            let ratingCount = 0;
+            votes.forEach(v => {
+                for (let i = 1; i <= 6; i++) {
+                    const r = v[`mockup_${i}_rating`];
+                    if (r !== null && r !== undefined) {
+                        totalRatings += r;
+                        ratingCount++;
+                    }
+                }
+            });
+            
+            const avg = ratingCount > 0 ? (totalRatings / ratingCount).toFixed(1) : '-';
+            document.getElementById('avg-rating').textContent = avg;
+            
+            // Last vote
+            const lastVote = new Date(votes[0].created_at);
+            document.getElementById('last-vote').textContent = lastVote.toLocaleString('de-DE');
+        }
+        
+        function calculateStats(votes) {
+            const stats = {};
+            for (let i = 1; i <= 6; i++) {
+                const ratings = votes.map(v => v[`mockup_${i}_rating`]).filter(r => r !== null && r !== undefined);
+                stats[i] = {
+                    name: mockupNames[i],
+                    avg: ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length) : 0,
+                    votes: ratings.length
+                };
+            }
+            return Object.entries(stats)
+                .map(([id, s]) => ({ id: parseInt(id), ...s }))
+                .sort((a, b) => b.avg - a.avg);
+        }
+        
+        function displayTop3(votes) {
+            const stats = calculateStats(votes);
+            const top3 = stats.slice(0, 3);
+            const medals = ['🥇', '🥈', '🥉'];
+            
+            document.getElementById('top3-list').innerHTML = top3.map((item, index) => `
+                <div class="top3-item rank-${index + 1}">
+                    <div class="top3-rank">${medals[index]}</div>
+                    <div class="top3-name">${item.name}</div>
+                    <div class="top3-score">${item.avg.toFixed(2)} ⭐</div>
+                    <div class="top3-votes">(${item.votes} Stimmen)</div>
+                </div>
+            `).join('');
+        }
+        
+        function displayTable(votes) {
+            const tbody = document.getElementById('votes-tbody');
+            
+            tbody.innerHTML = votes.map(vote => {
+                const date = new Date(vote.created_at).toLocaleString('de-DE');
+                
+                let ratings = '';
+                for (let i = 1; i <= 6; i++) {
+                    const r = vote[`mockup_${i}_rating`];
+                    const display = r !== null && r !== undefined ? r : '—';
+                    const cls = r !== null && r !== undefined ? '' : 'empty';
+                    ratings += `<td class="rating-cell ${cls}">${display}</td>`;
+                }
+                
+                return `
+                    <tr>
+                        <td><strong>${vote.voter_name}</strong></td>
+                        ${ratings}
+                        <td class="comments-cell">${vote.comments || '—'}</td>
+                        <td class="date-cell">${date}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        function exportCSV() {
+            if (allVotes.length === 0) {
+                alert('Keine Daten zum Exportieren.');
+                return;
+            }
+            
+            let csv = 'Name,Mockup 1,Mockup 2,Mockup 3,Mockup 4,Mockup 5,Mockup 6,Kommentare,Datum\n';
+            
+            allVotes.forEach(v => {
+                const ratings = [];
+                for (let i = 1; i <= 6; i++) {
+                    const r = v[`mockup_${i}_rating`];
+                    ratings.push(r !== null && r !== undefined ? r : '');
+                }
+                
+                const comments = (v.comments || '').replace(/"/g, '""').replace(/\n/g, ' ');
+                const date = new Date(v.created_at).toISOString();
+                
+                csv += `"${v.voter_name}",${ratings.join(',')},"${comments}","${date}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `vpma-abstimmungen-${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        }
+        
+        // Load data on page load
+        loadData();
+    </script>
+</body>
+</html>

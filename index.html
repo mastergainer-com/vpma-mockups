@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VP Maria Anzbach - Mockup Abstimmung</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -328,6 +329,93 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Top 3 Results */
+        .top3-section {
+            display: none;
+            background: var(--weiss);
+            padding: 40px;
+            border-radius: 16px;
+            margin-top: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .top3-section.show {
+            display: block;
+        }
+        
+        .top3-section h3 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: var(--blau);
+        }
+        
+        .top3-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .top3-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-radius: 12px;
+            background: var(--hellgrau);
+        }
+        
+        .top3-item.rank-1 {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: var(--schwarz);
+        }
+        
+        .top3-item.rank-2 {
+            background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%);
+            color: var(--schwarz);
+        }
+        
+        .top3-item.rank-3 {
+            background: linear-gradient(135deg, #CD7F32 0%, #B87333 100%);
+            color: var(--weiss);
+        }
+        
+        .top3-rank {
+            font-size: 32px;
+            font-weight: bold;
+            width: 50px;
+            text-align: center;
+        }
+        
+        .top3-name {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 0 20px;
+        }
+        
+        .top3-score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .top3-votes {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-left: 10px;
+        }
+        
+        /* Admin Link */
+        .admin-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .admin-link a {
+            color: var(--dunkelgrau);
+            font-size: 14px;
+            text-decoration: underline;
+        }
+        
         /* Rating Legend */
         .rating-legend {
             display: flex;
@@ -336,19 +424,6 @@
             margin-top: 8px;
             font-size: 12px;
             color: var(--dunkelgrau);
-        }
-        
-        /* Mockup Scroll Hint */
-        .mockup-scroll-hint {
-            text-align: center;
-            padding: 8px;
-            background: var(--hellgrau);
-            border-bottom: 1px solid var(--mittelgrau);
-        }
-        
-        .mockup-scroll-hint small {
-            color: var(--dunkelgrau);
-            font-size: 13px;
         }
     </style>
 </head>
@@ -371,9 +446,6 @@
                 <div class="mockup-header">
                     <h2>Mockup 1: Klassisch NÖ</h2>
                     <span class="mockup-number">1</span>
-                </div>
-                <div class="mockup-scroll-hint">
-                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
                 </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup1_Klassisch.html" loading="lazy" sandbox="allow-same-origin"></iframe>
@@ -402,9 +474,6 @@
                     <h2>Mockup 2: Modern Lokal</h2>
                     <span class="mockup-number">2</span>
                 </div>
-                <div class="mockup-scroll-hint">
-                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
-                </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup2_Modern.html" loading="lazy" sandbox="allow-same-origin"></iframe>
                     <a href="VP_MA_Mockup2_Modern.html" target="_blank" class="preview-overlay">↗ Vollbild</a>
@@ -431,9 +500,6 @@
                 <div class="mockup-header">
                     <h2>Mockup 3: Premium Gemeinde</h2>
                     <span class="mockup-number">3</span>
-                </div>
-                <div class="mockup-scroll-hint">
-                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
                 </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup3_Premium.html" loading="lazy" sandbox="allow-same-origin"></iframe>
@@ -462,9 +528,6 @@
                     <h2>Mockup 4: Magazin-Style</h2>
                     <span class="mockup-number">4</span>
                 </div>
-                <div class="mockup-scroll-hint">
-                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
-                </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup4_Magazin.html" loading="lazy" sandbox="allow-same-origin"></iframe>
                     <a href="VP_MA_Mockup4_Magazin.html" target="_blank" class="preview-overlay">↗ Vollbild</a>
@@ -492,9 +555,6 @@
                     <h2>Mockup 5: Split-Screen</h2>
                     <span class="mockup-number">5</span>
                 </div>
-                <div class="mockup-scroll-hint">
-                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
-                </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup5_SplitScreen.html" loading="lazy" sandbox="allow-same-origin"></iframe>
                     <a href="VP_MA_Mockup5_SplitScreen.html" target="_blank" class="preview-overlay">↗ Vollbild</a>
@@ -521,9 +581,6 @@
                 <div class="mockup-header">
                     <h2>Mockup 6: Kachel-Grid</h2>
                     <span class="mockup-number">6</span>
-                </div>
-                <div class="mockup-scroll-hint">
-                    <small>👇 In der Vorschau scrollen, um das ganze Design zu sehen</small>
                 </div>
                 <div class="mockup-preview">
                     <iframe src="VP_MA_Mockup6_Kachel.html" loading="lazy" sandbox="allow-same-origin"></iframe>
@@ -556,19 +613,40 @@
         <!-- Loading -->
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p>Email wird vorbereitet...</p>
+            <p>Abstimmung wird gespeichert...</p>
         </div>
         
         <!-- Success Message -->
         <div class="success-message" id="success-message">
             <h3>✅ Danke für Ihre Abstimmung!</h3>
-            <p>Bitte senden Sie die geöffnete Email ab, um Ihre Bewertung zu übermitteln.</p>
+            <p>Ihre Bewertung wurde gespeichert.</p>
+        </div>
+        
+        <!-- Top 3 Results -->
+        <div class="top3-section" id="top3-section">
+            <h3>🏆 Aktuelle Top 3</h3>
+            <div class="top3-list" id="top3-list">
+                <!-- Dynamisch gefüllt -->
+            </div>
+        </div>
+        
+        <!-- Admin Link -->
+        <div class="admin-link">
+            <a href="admin.html">📊 Admin-Bereich</a>
         </div>
     </div>
     
     <script>
         // Store votes
         const votes = {};
+        
+        // Supabase Config
+        const SUPABASE_URL = 'https://mctbuvwcupeovtdqeoru.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jdGJ1dndjdXBlb3Z0ZHFlb3J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMzE4OTQsImV4cCI6MjA4OTYwNzg5NH0.zYrdRTwjXpZnjKsXR5JMLz_s8v8x7MTvSs7jqZRnKFw';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Resend Config
+        const RESEND_API_KEY = 're_j9G4zb3j_7gdY9FEchoYHGsMi8Ex1NHwB';
         
         // Star rating functionality
         document.querySelectorAll('.star-rating').forEach(rating => {
@@ -616,8 +694,140 @@
             });
         });
         
+        // Mockup names mapping
+        const mockupNames = {
+            1: 'Klassisch NÖ',
+            2: 'Modern Lokal',
+            3: 'Premium Gemeinde',
+            4: 'Magazin-Style',
+            5: 'Split-Screen',
+            6: 'Kachel-Grid'
+        };
+        
+        // Load Top 3 on page load
+        async function loadTop3() {
+            try {
+                const { data, error } = await supabase
+                    .from('mockup_votes')
+                    .select('*');
+                
+                if (error) throw error;
+                
+                if (data && data.length > 0) {
+                    const stats = calculateStats(data);
+                    displayTop3(stats);
+                }
+            } catch (err) {
+                console.log('Top 3 noch nicht verfügbar');
+            }
+        }
+        
+        // Calculate statistics
+        function calculateStats(votes) {
+            const stats = {};
+            for (let i = 1; i <= 6; i++) {
+                const ratings = votes.map(v => v[`mockup_${i}_rating`]).filter(r => r !== null && r !== undefined);
+                stats[i] = {
+                    name: mockupNames[i],
+                    avg: ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length) : 0,
+                    votes: ratings.length
+                };
+            }
+            return Object.entries(stats)
+                .map(([id, s]) => ({ id: parseInt(id), ...s }))
+                .sort((a, b) => b.avg - a.avg);
+        }
+        
+        // Display Top 3
+        function displayTop3(stats) {
+            const top3List = document.getElementById('top3-list');
+            const top3Section = document.getElementById('top3-section');
+            
+            const top3 = stats.slice(0, 3);
+            const medals = ['🥇', '🥈', '🥉'];
+            
+            top3List.innerHTML = top3.map((item, index) => `
+                <div class="top3-item rank-${index + 1}">
+                    <div class="top3-rank">${medals[index]}</div>
+                    <div class="top3-name">${item.name}</div>
+                    <div class="top3-score">${item.avg.toFixed(1)} ⭐</div>
+                    <div class="top3-votes">(${item.votes} Stimmen)</div>
+                </div>
+            `).join('');
+            
+            top3Section.classList.add('show');
+        }
+        
+        // Send email via Resend
+        async function sendEmail(voteData, voteId) {
+            const mockupNames = {
+                1: 'Klassisch NÖ',
+                2: 'Modern Lokal',
+                3: 'Premium Gemeinde',
+                4: 'Magazin-Style',
+                5: 'Split-Screen',
+                6: 'Kachel-Grid'
+            };
+            
+            let emailBody = `<h2>🗳️ Neue VP MA Mockup Abstimmung</h2>`;
+            emailBody += `<p><strong>Von:</strong> ${voteData.voter_name}</p>`;
+            emailBody += `<p><strong>Zeit:</strong> ${new Date().toLocaleString('de-DE')}</p>`;
+            emailBody += `<p><strong>Vote ID:</strong> ${voteId}</p>`;
+            emailBody += `<hr>`;
+            emailBody += `<h3>Bewertungen:</h3>`;
+            emailBody += `<table border="1" cellpadding="10" style="border-collapse: collapse;">`;
+            emailBody += `<tr><th>Mockup</th><th>Bewertung</th></tr>`;
+            
+            let totalVotes = 0;
+            let sumRatings = 0;
+            
+            for (let i = 1; i <= 6; i++) {
+                const rating = voteData[`mockup_${i}_rating`];
+                const stars = rating ? '★'.repeat(rating) + '☆'.repeat(5 - rating) : '—';
+                emailBody += `<tr><td>${i}. ${mockupNames[i]}</td><td>${stars}</td></tr>`;
+                
+                if (rating) {
+                    totalVotes++;
+                    sumRatings += rating;
+                }
+            }
+            
+            emailBody += `</table>`;
+            
+            if (totalVotes > 0) {
+                const average = (sumRatings / totalVotes).toFixed(1);
+                emailBody += `<p><strong>Durchschnitt:</strong> ${average} von 5 Sternen</p>`;
+            }
+            
+            if (voteData.comments) {
+                emailBody += `<hr><h3>Kommentar:</h3><p>${voteData.comments.replace(/\n/g, '<br>')}</p>`;
+            }
+            
+            try {
+                const response = await fetch('https://api.resend.com/emails', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${RESEND_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        from: 'noreply@zeitsparen.at',
+                        to: 'jochen@jasch.cc',
+                        subject: `🗳️ VP MA Mockup Abstimmung - ${voteData.voter_name}`,
+                        html: emailBody
+                    })
+                });
+                
+                if (!response.ok) {
+                    console.error('Email send failed:', await response.text());
+                }
+            } catch (err) {
+                console.error('Email error:', err);
+            }
+        }
+        
         // Submit functionality
-        document.getElementById('submit-btn').addEventListener('click', () => {
+        document.getElementById('submit-btn').addEventListener('click', async () => {
             const name = document.getElementById('voter-name').value.trim();
             
             // Validation
@@ -637,73 +847,62 @@
             document.getElementById('loading').classList.add('show');
             document.getElementById('submit-section').style.display = 'none';
             
-            // Collect all data
-            const voteData = {
-                name: name,
-                timestamp: new Date().toISOString(),
-                votes: {},
-                comments: {}
-            };
-            
+            // Collect comments
+            let comments = [];
             for (let i = 1; i <= 6; i++) {
-                voteData.votes[i] = votes[i] || null;
                 const commentBox = document.querySelector(`.comment-box[data-mockup="${i}"]`);
-                voteData.comments[i] = commentBox ? commentBox.value.trim() : '';
+                if (commentBox && commentBox.value.trim()) {
+                    comments.push(`${mockupNames[i]}: ${commentBox.value.trim()}`);
+                }
             }
             
-            // Create email body
-            let emailBody = `🗳️ NEUE VP MA MOCKUP ABSTIMMUNG\n`;
-            emailBody += `========================================\n\n`;
-            emailBody += `Von: ${name}\n`;
-            emailBody += `Zeit: ${new Date().toLocaleString('de-DE')}\n\n`;
-            emailBody += `BEWERTUNGEN:\n`;
-            emailBody += `========================================\n\n`;
-            
-            const mockupNames = {
-                1: 'Klassisch NÖ',
-                2: 'Modern Lokal',
-                3: 'Premium Gemeinde',
-                4: 'Magazin-Style',
-                5: 'Split-Screen',
-                6: 'Kachel-Grid'
+            // Prepare data for Supabase
+            const voteData = {
+                voter_name: name,
+                mockup_1_rating: votes[1] || null,
+                mockup_2_rating: votes[2] || null,
+                mockup_3_rating: votes[3] || null,
+                mockup_4_rating: votes[4] || null,
+                mockup_5_rating: votes[5] || null,
+                mockup_6_rating: votes[6] || null,
+                comments: comments.join('\n\n') || null
             };
             
-            let totalVotes = 0;
-            let sumRatings = 0;
-            
-            for (let i = 1; i <= 6; i++) {
-                const rating = voteData.votes[i];
-                const stars = rating ? '★'.repeat(rating) + '☆'.repeat(5 - rating) : '— (nicht bewertet)';
-                emailBody += `Mockup ${i}: ${mockupNames[i]}\n`;
-                emailBody += `Bewertung: ${stars}\n`;
-                if (voteData.comments[i]) {
-                    emailBody += `Kommentar: ${voteData.comments[i]}\n`;
-                }
-                emailBody += `\n`;
+            try {
+                // Save to Supabase
+                const { data, error } = await supabase
+                    .from('mockup_votes')
+                    .insert([voteData])
+                    .select();
                 
-                if (rating) {
-                    totalVotes++;
-                    sumRatings += rating;
-                }
-            }
-            
-            if (totalVotes > 0) {
-                const average = (sumRatings / totalVotes).toFixed(1);
-                emailBody += `========================================\n`;
-                emailBody += `Durchschnitt: ${average} von 5 Sternen\n`;
-                emailBody += `Bewertete Mockups: ${totalVotes} von 6\n`;
-            }
-            
-            // Open mailto
-            const subject = `🗳️ VP MA Mockup Abstimmung - ${name}`;
-            const mailtoLink = `mailto:noreply@zeitsparen.at?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-            
-            setTimeout(() => {
-                window.location.href = mailtoLink;
+                if (error) throw error;
+                
+                const voteId = data[0].id;
+                
+                // Send email notification
+                await sendEmail(voteData, voteId);
+                
+                // Show success
                 document.getElementById('loading').classList.remove('show');
                 document.getElementById('success-message').classList.add('show');
-            }, 500);
+                
+                // Load and display updated Top 3
+                const { data: allVotes } = await supabase.from('mockup_votes').select('*');
+                if (allVotes) {
+                    const stats = calculateStats(allVotes);
+                    displayTop3(stats);
+                }
+                
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Fehler beim Speichern. Bitte versuchen Sie es erneut.');
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('submit-section').style.display = 'block';
+            }
         });
+        
+        // Load Top 3 on page load
+        loadTop3();
     </script>
 </body>
 </html>
