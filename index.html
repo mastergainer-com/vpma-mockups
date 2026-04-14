@@ -655,6 +655,23 @@
         // Resend Config
         const RESEND_API_KEY = 're_j9G4zb3j_7gdY9FEchoYHGsMi8Ex1NHwB';
         
+        // Hilfsfunktion für sichere API-Calls mit Timeout
+        async function fetchWithTimeout(url, options, timeout = 10000) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, {
+                    ...options,
+                    signal: controller.signal
+                });
+                clearTimeout(id);
+                return response;
+            } catch (error) {
+                clearTimeout(id);
+                throw error;
+            }
+        }
+        
         // Star rating functionality
         document.querySelectorAll('.star-rating').forEach(rating => {
             const mockupId = rating.dataset.mockup;
@@ -734,15 +751,36 @@
                     .from('mockup_votes')
                     .select('*');
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Supabase Error:', error);
+                    // Zeige trotzdem leere Top 3 Section mit Hinweis
+                    showTop3Error('Statistik temporär nicht verfügbar');
+                    return;
+                }
                 
                 if (data && data.length > 0) {
                     const stats = calculateStats(data);
                     displayTop3(stats);
+                } else {
+                    showTop3Error('Noch keine Abstimmungen vorhanden');
                 }
             } catch (err) {
-                console.log('Top 3 noch nicht verfügbar');
+                console.error('Load Top 3 Error:', err);
+                showTop3Error('Statistik temporär nicht verfügbar');
             }
+        }
+        
+        // Zeige Top 3 Fehler/Hinweis
+        function showTop3Error(message) {
+            const top3List = document.getElementById('top3-list');
+            const top3Section = document.getElementById('top3-section');
+            
+            top3List.innerHTML = `
+                <div class="top3-item" style="background: #f8f9fa; text-align: center; justify-content: center;">
+                    <div style="color: #666; font-size: 14px;">${message}</div>
+                </div>
+            `;
+            top3Section.classList.add('show');
         }
         
         // Calculate statistics
@@ -827,25 +865,33 @@
             }
             
             try {
-                const response = await fetch('https://api.resend.com/emails', {
+                // Verwende onerror@vp-mariaanzbach.at als Fallback (diese Domain ist verifiziert)
+                const fromEmail = 'onerror@vp-mariaanzbach.at';
+                
+                const response = await fetchWithTimeout('https://api.resend.com/emails', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${RESEND_API_KEY}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        from: 'noreply@zeitsparen.at',
+                        from: fromEmail,
                         to: 'jochen@jasch.cc',
                         subject: `🗳️ VP MA Mockup Abstimmung - ${voteData.voter_name}`,
                         html: emailBody
                     })
-                });
+                }, 5000); // 5 Sekunden Timeout
                 
                 if (!response.ok) {
-                    console.error('Email send failed:', await response.text());
+                    const errorText = await response.text();
+                    console.error('Email send failed:', errorText);
+                    // Email-Fehler soll nicht den gesamten Submit blockieren
+                } else {
+                    console.log('Email sent successfully');
                 }
             } catch (err) {
                 console.error('Email error:', err);
+                // Email-Fehler soll nicht den gesamten Submit blockieren
             }
         }
         
@@ -918,7 +964,15 @@
                 
             } catch (err) {
                 console.error('Error:', err);
-                alert('Fehler beim Speichern. Bitte versuchen Sie es erneut.');
+                let errorMsg = 'Fehler beim Speichern. Bitte versuchen Sie es erneut.';
+                
+                if (err.message && err.message.includes('row-level security')) {
+                    errorMsg = 'Datenbank-Fehler: Bitte kontaktieren Sie den Administrator.';
+                } else if (err.message && err.message.includes('network')) {
+                    errorMsg = 'Netzwerk-Fehler: Bitte überprüfen Sie Ihre Internetverbindung.';
+                }
+                
+                alert(errorMsg);
                 document.getElementById('loading').classList.remove('show');
                 document.getElementById('submit-section').style.display = 'block';
             }
